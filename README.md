@@ -5,7 +5,7 @@ Modelagem e análise da rede de ônibus da **ETUFOR (Fortaleza-CE)** utilizando 
 
 ---
 
-## 📋 Sobre o Projeto
+##  Sobre o Projeto
 
 Este projeto transforma os dados públicos de transporte da ETUFOR em um **dígrafo ponderado** e aplica algoritmos clássicos de grafos para responder perguntas reais sobre a rede:
 
@@ -17,7 +17,7 @@ Este projeto transforma os dados públicos de transporte da ETUFOR em um **dígr
 
 ---
 
-## 🗂️ Estrutura do Projeto
+##  Estrutura do Projeto
 
 ```
 projeto_grafos/
@@ -46,7 +46,7 @@ projeto_grafos/
 
 ---
 
-## 🧠 Modelagem Matemática
+##  Modelagem Matemática
 
 A rede de transporte é modelada como um **dígrafo ponderado** `G = (V, A, W)`:
 
@@ -66,7 +66,7 @@ A rede de transporte é modelada como um **dígrafo ponderado** `G = (V, A, W)`:
 
 ---
 
-## 🔁 Fluxo do Sistema
+##  Fluxo do Sistema
 
 ```
 arquivo_google.zip
@@ -94,7 +94,7 @@ Ao executar o `main.py`, o sistema:
 
 ---
 
-## ⚙️ Instalação
+##  Instalação
 
 ### Pré-requisitos
 
@@ -132,7 +132,7 @@ data/
 
 ---
 
-## ▶️ Como Executar
+##  Como Executar
 
 ### Menu interativo (recomendado)
 
@@ -191,7 +191,7 @@ Encontra o caminho de **menor custo acumulado** (tempo ou distância) entre dois
 
 ---
 
-## 🔍 Análises Estruturais
+##  Análises Estruturais
 
 | Análise | O que revela |
 |---|---|
@@ -211,7 +211,7 @@ Encontra o caminho de **menor custo acumulado** (tempo ou distância) entre dois
 
 ---
 
-## 🗺️ Visualizações
+##  Visualizações
 
 ### 1. Mapa Geográfico da Rede Completa
 Todas as paradas ativas plotadas nas coordenadas reais de Fortaleza. A intensidade da cor indica o grau do vértice; os terminais principais aparecem destacados em laranja.
@@ -224,7 +224,7 @@ Comparativo visual entre os dois caminhos para o trajeto Terminal Siqueira → T
 
 ---
 
-## 📦 Dependências
+##  Dependências
 
 | Biblioteca | Versão mínima | Uso |
 |---|---|---|
@@ -246,7 +246,8 @@ Biblioteca padrão utilizada: `csv`, `math`, `heapq`, `collections`, `dataclasse
 
 ---
 
-## 👤 Autor
+##  Autor
 
+Bernardo Pinheiro e Allan Justo
 Desenvolvido como Trabalho Final (AV3) da disciplina de Teoria dos Grafos.  
 Dados fornecidos pela **ETUFOR — Empresa de Transporte Urbano de Fortaleza**.
