@@ -133,45 +133,58 @@ def print_connectivity_analysis(graph: Graph, result: dict) -> None:
 
 def analyze_cycles(graph: Graph) -> dict:
     """
-    Detecta a existência de ciclos usando DFS com marcação de estados.
+    Detecta a existência de ciclos usando DFS iterativa com marcação de estados.
 
-    Estados de cada vértice durante a DFS:
+    Versão iterativa evita o estouro de pilha de recursão do Python
+    (limite padrão de 1.000 chamadas) em grafos com milhares de vértices.
+
+    Estados de cada vértice:
         0 → não visitado
-        1 → em processamento (na pilha de chamadas)
+        1 → em processamento (está na pilha)
         2 → completamente processado
 
-    Se durante a DFS encontrarmos uma aresta para um vértice em estado 1,
-    encontramos um ciclo (aresta de retorno).
+    Se encontrarmos uma aresta para um vértice em estado 1,
+    há um ciclo (aresta de retorno).
     """
-    state    = {v: 0 for v in graph.vertices}
-    has_cycle = False
+    state         = {v: 0 for v in graph.vertices}
+    predecessor   = {v: None for v in graph.vertices}
+    has_cycle     = False
     cycle_example = []
 
-    def dfs(v, path):
-        nonlocal has_cycle
-        if has_cycle:
-            return
+    for start in graph.vertices:
+        if state[start] != 0 or has_cycle:
+            continue
 
-        state[v] = 1
-        path.append(v)
+        # Pilha: (vértice, iterador sobre os vizinhos)
+        stack = [(start, iter(graph.neighbors(start)))]
+        state[start] = 1
 
-        for edge in graph.neighbors(v):
-            if state[edge.to] == 1:
-                # Aresta de retorno — ciclo encontrado
-                has_cycle = True
-                idx = path.index(edge.to)
-                cycle_example.extend(path[idx:] + [edge.to])
-                return
-            if state[edge.to] == 0:
-                dfs(edge.to, path)
+        while stack and not has_cycle:
+            v, neighbors = stack[-1]
 
-        state[v] = 2
-        path.pop()
+            try:
+                edge = next(neighbors)
 
-    # Percorre todos os vértices para cobrir componentes desconexos
-    for v in graph.vertices:
-        if state[v] == 0 and not has_cycle:
-            dfs(v, [])
+                if state[edge.to] == 1:
+                    # Aresta de retorno — reconstrói o ciclo pelo predecessor
+                    has_cycle = True
+                    cycle = [edge.to]
+                    cur = v
+                    while cur != edge.to and cur is not None:
+                        cycle.append(cur)
+                        cur = predecessor[cur]
+                    cycle.append(edge.to)
+                    cycle_example = list(reversed(cycle))
+
+                elif state[edge.to] == 0:
+                    state[edge.to] = 1
+                    predecessor[edge.to] = v
+                    stack.append((edge.to, iter(graph.neighbors(edge.to))))
+
+            except StopIteration:
+                # Todos os vizinhos processados — marca como concluído
+                state[v] = 2
+                stack.pop()
 
     return {
         "has_cycle":     has_cycle,
